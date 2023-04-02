@@ -1,0 +1,22 @@
+$theme-colors: (
+  'primary': #093ea8,
+  'secondary': #3bd7ec,
+  'success': #22e11c,
+  'info': #d9ff50,
+  'warning': #ffbe0b,
+  'danger': #ff0000,
+  'light': #c0ccda,
+  'dark': #000103,
+);
+
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+body{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100vh;
+  background: url('../../public/img/pexels-willian-justen-de-vasconcellos-15829427_1920_1280.jpg') no-repeat center;
+  background-size: cover;
+}
