@@ -7,8 +7,6 @@ type MyProps = {
 }
 
 export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
-    const [cardStyle, setCardStyle] = useState([`${styles.card}`]);
-    const [isRegisterActive, setRegisterActive] = useState(false);
     const [isActive, setActive] = useState(true);
 
     const handleClose = useCallback(()=>{
@@ -16,12 +14,12 @@ export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
     }, []);
 
     const register = useCallback(() => {
-        const card = document.getElementById('card');
+        let card = document.getElementById('card');
         card?.classList.add(`${styles.active}`);
     }, []);
 
     const login = useCallback(() => {
-        const card = document.getElementById('card');
+        let card = document.getElementById('card');
         card?.classList.remove(`${styles.active}`);
     }, []);
 
@@ -30,27 +28,28 @@ export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
     }, [isOpen]);
 
     useEffect(():void =>{
+        let card = document.getElementById('card');
         if (isActive){
-            setCardStyle(prevList => [...prevList, `${styles['active-popup']}`]);
+            card?.classList.add(`${styles['active-popup']}`)
         }
         else
-            setCardStyle(cardStyle.filter(element => element != `${styles['active-popup']}`));        
+            card?.classList.remove(`${styles['active-popup']}`)
     }, [isActive]);
     
     return (
-        <div className={cardStyle.join(' ')} id='card'>
+        <div className={styles.card} id='card'>
             <div className={`${styles['form-box']} ${styles.login}`}>
             <h2>Login</h2>
             <form>
                 <div className={`${styles["input-box"]}`}>
-                    <i className="bi bi-person-fill icon"></i>
+                    <i className={`bi bi-person-fill ${styles.icon}`}></i>
                     <input type="text" id="txtUser" required />
                     <label htmlFor="txtUser">
                         Usuário
                     </label>
                 </div>
                 <div className={`${styles["input-box"]}`}>
-                    <i className="bi bi-key-fill icon"></i>
+                    <i className={`bi bi-key-fill ${styles.icon}`}></i>
                     <input type="password" id="txtPassword" required />
                     <label htmlFor="txtPassword">
                         Senha
@@ -66,8 +65,8 @@ export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
                 <button type="submit">Conectar</button>
                 <div className={`${styles["login-register"]}`}>
                     <p>
-                        Não tem uma conta?
-                        <a href="#" className={`${styles["register-link"]}`} onClick={register}>Registre-se</a>
+                        Não tem uma conta? 
+                        <a href="#" className={`${styles["register-link"]}`} onClick={register}> Registre-se</a>
                     </p>
                 </div>
             </form>
@@ -77,28 +76,28 @@ export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
                 <h2>Cadastro</h2>
                 <form>
                     <div className={`${styles["input-box"]}`}>
-                        <i className="bi bi-person-fill icon"></i>
+                        <i className={`bi bi-person-fill ${styles.icon}`}></i>
                         <input type="text" id="txtRegisterUser" required />
                         <label htmlFor="txtRegisterUser">
                             Usuário
                         </label>
                     </div>
                     <div className={`${styles["input-box"]}`}>
-                        <i className="bi bi-envelope-at icon"></i>
+                        <i className={`bi bi-envelope-at ${styles.icon}`}></i>
                         <input type="email" id="txtEmail" required />
                         <label htmlFor="txtEmail">
                             Email
                         </label>
                     </div>
                     <div className={`${styles["input-box"]}`}>
-                        <i className="bi bi-key-fill icon"></i>
+                        <i className={`bi bi-key-fill ${styles.icon}`}></i>
                         <input type="password" id="txtRegisterPassword" required />
                         <label htmlFor="txtRegisterPassword">
                             Senha
                         </label>
                     </div>
                     <div className={`${styles["input-box"]}`}>
-                        <i className="bi bi-key-fill icon"></i>
+                        <i className={`bi bi-key-fill ${styles.icon}`}></i>
                         <input type="password" id="txtConfirmPassword" required />
                         <label htmlFor="txtConfirmPassword">
                             Confirmar Senha
@@ -113,8 +112,8 @@ export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
                     <button type="submit">Cadastrar</button>
                     <div className={`${styles["login-register"]}`}>
                         <p>
-                            Já tem uma conta?
-                            <a href="#" className={`${styles["login-link"]}`} onClick={login}>Login</a>
+                            Já tem uma conta? 
+                            <a href="#" className={`${styles["login-link"]}`} onClick={login}> Login</a>
                         </p>
                     </div>
                 </form>
