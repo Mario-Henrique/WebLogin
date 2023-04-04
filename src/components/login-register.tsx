@@ -1,5 +1,7 @@
+import { AuthContext } from '@/contexts/AuthContext';
 import styles from '@/styles/login_register.module.scss'
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 type MyProps = {
     isOpen: boolean;
@@ -8,6 +10,16 @@ type MyProps = {
 
 export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
     const [isActive, setActive] = useState(true);
+    const { register: registerForm, handleSubmit } = useForm();
+    const { signIn } = useContext(AuthContext);
+
+    async function handleSignIn(data){
+        try{
+            await signIn(data);
+        } catch (err){
+            console.log("Erro durante conexão. ", err);
+        }
+    }
 
     const handleClose = useCallback(()=>{
         action()
@@ -40,25 +52,25 @@ export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
         <div className={styles.card} id='card'>
             <div className={`${styles['form-box']} ${styles.login}`}>
             <h2>Login</h2>
-            <form>
+            <form onSubmit={handleSubmit(handleSignIn)}>
                 <div className={`${styles["input-box"]}`}>
                     <i className={`bi bi-person-fill ${styles.icon}`}></i>
-                    <input type="text" id="txtUser" required />
+                    <input {...registerForm('txtUser')} type="text" name="txtUser" id="txtUser" required />
                     <label htmlFor="txtUser">
                         Usuário
                     </label>
                 </div>
                 <div className={`${styles["input-box"]}`}>
                     <i className={`bi bi-key-fill ${styles.icon}`}></i>
-                    <input type="password" id="txtPassword" required />
+                    <input {...registerForm('txtPassword')} type="password" name="txtPassword" id="txtPassword" required />
                     <label htmlFor="txtPassword">
                         Senha
                     </label>
                 </div>
                 <div className={`${styles["remember-forgot"]}`}>
                     <label htmlFor="chkRememberMe">
-                        <input type="checkbox" id="chkRememberMe" />
-                        Lembrar-me
+                        <input {...registerForm('chkRememberMe')} type="checkbox" name="chkRememberMe" id="chkRememberMe" /> 
+                        &nbsp;Lembrar-me
                     </label>
                     <a href="#">Esqueceu a senha?</a>
                 </div>
@@ -106,7 +118,7 @@ export default function LoginRegister({isOpen, action}: MyProps): JSX.Element{
                     <div className={`${styles["remember-forgot"]}`}>
                         <label htmlFor="chkTerms">
                             <input type="checkbox" id="chkTerms" />
-                            Aceitar os termos & condições
+                            &nbsp;Aceitar os termos & condições
                         </label>
                     </div>
                     <button type="submit">Cadastrar</button>

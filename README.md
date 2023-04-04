@@ -1,5 +1,5 @@
 # Descrição
-Exemplo de um sistema de login funcional com dashboard.
+Exemplo de um sistema de login com página privada.
 
 # Tecnologias
     » Bootstrap
